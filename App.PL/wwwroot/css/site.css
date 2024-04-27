@@ -1,0 +1,158 @@
+@font-face {
+    font-family: 'IBMPlexSansArabic';
+    src: url("../fonts/IBMPlexSansArabic-Medium.ttf") format('woff2');
+}
+
+* {
+    font-family: 'IBMPlexSansArabic', sans-serif !important;
+    scroll-behavior: smooth;
+}
+
+.vh-90{
+    width: 90vh !important;
+}
+
+.rounded-5 {
+    border-radius: 2rem !important
+}
+
+.rounded-4 {
+    border-radius: 1.5rem !important
+}
+
+/*body {
+     //Set the background image
+    background-image: url('../images/law-justice-seamless-pattern_53562-634.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;  Set the height to at least 100% of the viewport height 
+     Create an overlay with 50% black color 
+    position: relative;
+}
+
+ Create the overlay using a pseudo-element 
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);  50% black color with alpha channel 
+    z-index: -1;  Place the overlay above the background image 
+}*/
+
+.resize-none{
+    resize: none !important;
+}
+
+.counting-main {
+    width: 100%;
+}
+
+.main-parent {
+    height: calc(100vh - 120px);
+}
+
+footer{
+    max-height: 60px;
+    padding: 25px 0;
+}
+
+
+/* Large screens (min-width: 1200px) */
+@media only screen and (min-width: 1200px) {
+    .counting-main {
+        width: 50% !important;
+    }
+
+    nav a, nav li, footer p, footer a {
+        font-size: 18px !important;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1199px) {
+    .counting-main {
+        width: 75% !important;
+    }
+
+    nav a, nav li, footer p, footer a {
+        font-size: 14px !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .counting-main {
+        width: 90% !important;
+    }
+    nav a, nav li, footer p, footer a {
+        font-size: 13px !important;
+    }
+}
+
+.my-overflow {
+    overflow: auto;
+    overflow-x: hidden;
+    max-height: 60vh;
+}
+
+h1 {
+    width: fit-content;
+    padding: 8px 50px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 .5rem 0.9rem rgba(0,0,0,0.25);
+}
+
+.swal2-input-no-spinner::-webkit-inner-spin-button,
+.swal2-input-no-spinner::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.swal2-input-no-spinner {
+    -moz-appearance: textfield;
+}
+
+.selected-row {
+    background-color: #ffeeba; /* Set your desired background color here */
+}
+
+.my-scroll::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 100px;
+}
+
+.my-scroll::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 100px;
+}
+
+.my-scroll::-webkit-scrollbar-track {
+    border-radius: 100px;
+    width: 16px;
+    background-color: transparent;
+}
+#EmpDetails label{
+    margin:0 0 12px !important;
+
+    color:brown !important;    
+}
+#EmpDetails input:not([type="radio"]), #EmpDetails select, #concatenatedName {
+    border: none !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 0 12px !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+}
+
+
+input .dateDetails::-webkit-inner-spin-button,
+input.dateDetails::-webkit-calendar-picker-indicator {
+    display: none;
+}
+

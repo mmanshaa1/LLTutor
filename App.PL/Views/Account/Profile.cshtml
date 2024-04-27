@@ -1,0 +1,53 @@
+﻿@model LoggedInUser
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "الحساب";
+    string message = string.Empty;
+    if (TempData["Message"] != null)
+    {
+        message = TempData["Message"] as string;
+    }
+}
+
+<h1>تحديث بيانات الحساب</h1>
+
+<div class="bg-light w-75 text-center rounded-4 border border-1 shadow" style="max-height: 75vh;" >
+    <form asp-action="Update" class="p-3">
+        <input asp-for="Id" hidden/>
+        <div class="form-floating mb-3 ">
+            <input asp-for="Name" class="form-control input-field text-end" style="background-color:rgba(226, 239, 237, 0.8)">
+            <label asp-for="Name">الاسم</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="UserName" class="form-control input-field text-end" style="background-color:rgba(226, 239, 237, 0.8)">
+            <label asp-for="UserName">اسم المستخدم</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input asp-for="Email" class="form-control input-field text-end" style="background-color:rgba(226, 239, 237, 0.8)">
+            <label asp-for="Email">البريد الإلكتروني</label>
+        </div>
+
+        <div class="form-floating mb-4">
+            <input asp-for="Phone" class="form-control input-field text-end" style="background-color:rgba(226, 239, 237, 0.8)">
+            <label asp-for="Phone">رقم الهاتف</label>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 text-lg-end col-md-12 text-md-center mb-2">
+                <button class="ms-auto btn btn-warning rounded-4 px-5" type="submit">تحديث الحساب</button>
+            </div>
+            <div class="col-lg-6 text-lg-start col-md-12 text-md-center">
+                <button class="btn btn-outline-secondary rounded-4 px-3" type="button" onclick="ChangePass()">هل تريد تغيير كلمة المرور؟</button>
+            </div>
+        </div>
+
+        <div asp-validation-summary="All" class="text-danger text-start"></div>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/profile.js"></script>
+}

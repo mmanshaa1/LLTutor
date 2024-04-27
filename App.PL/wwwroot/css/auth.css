@@ -1,0 +1,89 @@
+﻿@font-face {
+    font-family: 'IBMPlexSansArabic';
+    src: url("../fonts/IBMPlexSansArabic-Medium.ttf") format('woff2');
+}
+
+* {
+    font-family: 'IBMPlexSansArabic', sans-serif !important;
+    scroll-behavior: smooth;
+}
+
+.btn-submit {
+    color: #fff;
+    background: #348e9a;
+    border-color: #348e9a;
+}
+
+.btn-submit:focus {
+    color: #fff;
+    background: #4e98a2;
+    border-color: #4e98a2;
+    box-shadow: 0 0 0 0.2rem rgba(208, 162, 52, 0.5);
+}
+
+.btn-submit:hover {
+    color: #fff;
+    background-color: #4e98a2;
+    transition: 0.5s;
+}
+
+
+body {
+    position: relative;
+    z-index: -1;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(52,142,154,0.9094012605042017) 55%, rgba(0,212,255,1) 100%);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.bg-mainColor {
+    background-color: #CFA734 !important;
+}
+
+form {
+    width: 90%;
+    border-radius: 15px !important;
+    transition: width 0.1s ease;
+}
+
+@media screen and (min-width: 1200px) {
+    form {
+        width: 30%;
+    }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+    form {
+        width: 40%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    form {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+    form {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    form {
+        background-color: red !important;
+        width: 90%;
+    }
+}
+
+.rounded-5 {
+    border-radius: 2rem !important
+}
+
+.rounded-4 {
+    border-radius: 1.5rem !important
+}

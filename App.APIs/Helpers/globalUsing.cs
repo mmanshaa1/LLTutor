@@ -1,0 +1,17 @@
+﻿global using App.APIs.DTOs;
+global using App.APIs.Errors;
+global using App.APIs.Extentions;
+global using App.APIs.Helpers;
+global using App.APIs.Middlewares;
+global using App.Core.Entities;
+global using App.Core.Interfaces;
+global using App.Core.Specifications.Specs;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using System.Net;
+global using System.Security.Claims;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
+global using System.Text.RegularExpressions;

@@ -1,0 +1,36 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "تسجيل الدخول";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<form asp-action="Login" class="bg-light px-3 py-4 mt-3 rounded-5 shadow-3" >
+    <h1 class="text-center fw-bolder pb-3"> تسجيل الدخول </h1>
+    <div class="form-input">
+        <input asp-for="Email" class="px-2 rounded-4 w-100 border py-2" placeholder="البريد الالكتروني أو اسم المستخدم">
+    </div>
+
+    <div class="form-input my-3">
+        <input asp-for="Password" class="px-2 rounded-4 w-100 border py-2" placeholder="كلمة المرور">
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger fw-bold"></div>
+
+    <div class="mb-3">
+        <input asp-for="RememberMe">
+        <label for="RememberMe" class="chekbox-label"> تذكرني</label>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-submit text-white py-2 w-100 rounded-4" type="submit">تسجيل الدخول</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $('form').submit(function (event) {
+            $('button').html('<i class="fa-solid fa-spinner fa-spin-pulse"></i>');
+        });
+    </script>
+}

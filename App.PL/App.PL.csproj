@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>App.PL</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\DataSeed\Roles.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App.Repository\App.Repository.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\files\Pictures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\DataSeed\Roles.json" />
+  </ItemGroup>
+</Project>

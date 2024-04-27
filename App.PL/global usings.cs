@@ -1,0 +1,9 @@
+﻿global using App.Core.Entities;
+global using App.Core.Interfaces;
+global using App.PL.Extentions;
+global using App.PL.Helpers;
+global using App.PL.Models;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Mvc;
+global using System.Text;
