@@ -1,5 +1,4 @@
-﻿using MailKit.Net.Pop3;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 
 namespace App.APIs.Helpers
 {
@@ -43,7 +42,7 @@ namespace App.APIs.Helpers
             }
             catch (Exception)
             {
-                
+
             }
 
             sc.Dispose();

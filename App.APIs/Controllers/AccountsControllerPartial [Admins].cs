@@ -6,17 +6,17 @@
         [AllowAnonymous]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(AccountDTOwithToken), StatusCodes.Status200OK)]
-        [HttpPost("accounts/login")]
+        [HttpPost("login")]
         public async Task<ActionResult<AccountDTOwithToken>> AccountLogin(LoginDto model)
         {
             var account = await accountManager.FindUserByIdOrUserNameOrEmailOrPhoneAsync(model.EmailOrPhone);
 
-            if (account is null) 
+            if (account is null)
                 return Unauthorized(new ApiResponse(401, "Invalid password or email."));
 
             var res = await accountSignInManager.PasswordSignInAsync(account, model.Password, model.RememberMe != 0, false);
 
-            if (!res.Succeeded) 
+            if (!res.Succeeded)
                 return Unauthorized(new ApiResponse(401, "Invalid password or email."));
 
             #region Tokens Handeling
@@ -54,7 +54,7 @@
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
-        [HttpPost("accounts/logout")]
+        [HttpPost("logout")]
         public async Task<ActionResult> AccountLogout()
         {
             // Get the currently authenticated user
@@ -83,14 +83,14 @@
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
-        [HttpPut("accounts/changepassword")]
+        [HttpPut("changepassword")]
         public async Task<ActionResult> AccountChangePassword(ChangePasswordDTO model)
         {
             var username = User.FindFirstValue(ClaimTypes.GivenName);
-            if (username is null) 
+            if (username is null)
                 return NotFound(new ApiResponse(404));
             var user = await accountManager.FindByNameAsync(username);
-            if (user is null) 
+            if (user is null)
                 return NotFound(new ApiResponse(404));
 
             var result = await accountManager.ChangePasswordAsync(user, model.current_password, model.new_password);
@@ -103,9 +103,8 @@
         #endregion
 
         #region Account Account Update Profile
-        [Authorize(Roles = "Master Account, Account")]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
-        [HttpPut("accounts/updatecurrent")]
+        [HttpPut("updatecurrent")]
         public async Task<ActionResult> UpdateCurrentAccount(UpdateAccountDTO updatedAccount)
         {
             var username = User.FindFirstValue(ClaimTypes.GivenName);
@@ -129,9 +128,6 @@
 
             if (!string.IsNullOrEmpty(updatedAccount.Email))
             {
-                if (account.EmailConfirmed)
-                    return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Email cannot be edited after account activation!" } });
-
                 if (!Regex.IsMatch(updatedAccount.Email, @"^[a-zA-Z0-9_.+-]+@(gmail|yahoo|hotmail|outlook|live|icloud)\.(com|net|org)$"))
                     return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Email must be of type gmail, yahoo, hotmail, outlook, live, icloud" } });
 
@@ -156,7 +152,7 @@
         [AllowAnonymous]
         [ProducesResponseType(typeof(ApiValidationErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(AccountDTO), StatusCodes.Status200OK)]
-        [HttpPost("accounts/register")]
+        [HttpPost("register")]
         public async Task<ActionResult<AccountDTO>> RegisterAccount(RegisterAccountDTO model)
         {
             #region Check Email and Phone Number
@@ -185,8 +181,8 @@
             };
 
             var res = await accountManager.CreateAsync(account, model.Password);
-            
-            if (!res.Succeeded) 
+
+            if (!res.Succeeded)
                 return BadRequest(new ApiValidationErrorResponse() { Errors = ["Error in password validation"] });
 
             await SendOTP(account, EmailOTPType.Verification);
