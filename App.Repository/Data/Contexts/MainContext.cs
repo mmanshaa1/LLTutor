@@ -31,7 +31,7 @@ namespace App.Repository.Data.Contexts
         public DbSet<Account> Accounts { get; set; }
         public DbSet<OTPForConfirm> OTPs { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Chat> Chats { get; set; }
+        public DbSet<ChatHistory> Chats { get; set; }
         #endregion
 
         #region Drop All Tables
