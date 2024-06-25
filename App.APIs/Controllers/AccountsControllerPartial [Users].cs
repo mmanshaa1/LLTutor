@@ -48,6 +48,8 @@
                 IsVerified = account.EmailConfirmed
             });
         }
+
+        private static readonly string[] error = new string[] { "Email is already registered for another account!" };
         #endregion
 
         #region Account Account Logout
@@ -116,23 +118,37 @@
             if (account == null)
                 return BadRequest(new ApiResponse(400, "User update failed, please make sure the current password is correct!"));
 
-
             if (!string.IsNullOrEmpty(updatedAccount.FirstName))
                 account.FirstName = updatedAccount.FirstName;
-            if (!string.IsNullOrEmpty(updatedAccount.Country))
-                account.Country = updatedAccount.Country;
+
+            if (!string.IsNullOrEmpty(updatedAccount.Nationality))
+                account.Nationality = updatedAccount.Nationality;
+
             if (!string.IsNullOrEmpty(updatedAccount.LastName))
                 account.LastName = updatedAccount.LastName;
+
             if (!string.IsNullOrEmpty(updatedAccount.PhoneNumber))
                 account.PhoneNumber = updatedAccount.PhoneNumber;
 
-            if (!string.IsNullOrEmpty(updatedAccount.Email))
+            if (!string.IsNullOrEmpty(updatedAccount.PhoneNumber2))
+                account.PhoneNumber2 = updatedAccount.PhoneNumber2;
+
+            if (updatedAccount.dateOfBirth != null)
+                account.dateOfBirth = updatedAccount.dateOfBirth;
+
+            if (!string.IsNullOrEmpty(updatedAccount.Location))
+                account.Location = updatedAccount.Location;
+
+            if (!string.IsNullOrEmpty(updatedAccount.Gender))
+                account.Gender = updatedAccount.Gender == "M";
+
+            if (!string.IsNullOrEmpty(updatedAccount.Email) && updatedAccount.Email != account.Email)
             {
                 if (!Regex.IsMatch(updatedAccount.Email, @"^[a-zA-Z0-9_.+-]+@(gmail|yahoo|hotmail|outlook|live|icloud)\.(com|net|org)$"))
-                    return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Email must be of type gmail, yahoo, hotmail, outlook, live, icloud" } });
+                    return BadRequest(new ApiValidationErrorResponse() { Errors = ["Email must be of type gmail, yahoo, hotmail, outlook, live, icloud"] });
 
                 if (await accountManager.IsEmailOrPhoneRegisteredAsync(updatedAccount.Email))
-                    return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "Email is already registered for another account!" } });
+                    return BadRequest(new ApiValidationErrorResponse() { Errors = error });
 
                 account.Email = updatedAccount.Email;
                 account.EmailConfirmed = false;
@@ -148,7 +164,7 @@
         }
         #endregion
 
-        #region Register register
+        #region Register Account
         [AllowAnonymous]
         [ProducesResponseType(typeof(ApiValidationErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(AccountDTO), StatusCodes.Status200OK)]
@@ -157,27 +173,28 @@
         {
             #region Check Email and Phone Number
             if (await accountManager.IsEmailOrPhoneRegisteredAsync(model.Email))
-                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "يبدو أن لديك بالفعل حسابًا باستخدام هذا البريد الإلكتروني، يرجى تسجيل الدخول!" } });
+                return BadRequest(new ApiValidationErrorResponse() { Errors = ["يبدو أن لديك بالفعل حسابًا باستخدام هذا البريد الإلكتروني، يرجى تسجيل الدخول!"] });
 
             if (await accountManager.IsEmailOrPhoneRegisteredAsync(model.PhoneNumber))
-                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "يبدو أن لديك بالفعل حسابًا باستخدام هذا البريد الإلكتروني، يرجى تسجيل الدخول!" } });
+                return BadRequest(new ApiValidationErrorResponse() { Errors = ["يبدو أن لديك بالفعل حسابًا باستخدام هذا البريد الإلكتروني، يرجى تسجيل الدخول!"] });
 
             if (!Regex.IsMatch(model.Email, @"^[a-zA-Z0-9_.+-]+@(gmail|yahoo|hotmail|outlook|live|icloud)\.(com|net|org)$"))
-                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "يجب أن يكون البريد الإلكتروني من نوع gmail, yahoo, hotmail, outlook, live, icloud" } });
+                return BadRequest(new ApiValidationErrorResponse() { Errors = ["يجب أن يكون البريد الإلكتروني من نوع gmail, yahoo, hotmail, outlook, live, icloud"] });
 
             if (model.PhoneNumber.Length != 11)
-                return BadRequest(new ApiValidationErrorResponse() { Errors = new string[] { "يجب أن يكون رقم الهاتف 11 رقمًا!" } });
+                return BadRequest(new ApiValidationErrorResponse() { Errors = ["يجب أن يكون رقم الهاتف 11 رقمًا!"] });
 
             #endregion
 
             var account = new Account()
             {
                 FirstName = model.FirstName,
-                Country = model.Country,
+                Nationality = model.Nationality,
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
                 Email = model.Email,
-                UserName = model.Email.Split('@')[0]
+                UserName = model.Email.Split('@')[0],
+                Gender = model.Gender == "M"
             };
 
             var res = await accountManager.CreateAsync(account, model.Password);
@@ -187,7 +204,7 @@
 
             await SendOTP(account, EmailOTPType.Verification);
 
-            return Ok(new ApiResponse(200, "Account has been successfully registered, The password is the phone number, Please activate the email."));
+            return Ok(new ApiResponse(200, "Account has been successfully registered."));
 
         }
         #endregion

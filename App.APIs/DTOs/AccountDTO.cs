@@ -66,7 +66,7 @@ namespace App.APIs.DTOs
         [Required]
         public string LastName { get; set; }
         [Required]
-        public string Country { get; set; }
+        public string Nationality { get; set; }
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
@@ -75,6 +75,8 @@ namespace App.APIs.DTOs
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
+        public string? Gender { get; set; } = "M";
+
     }
     #endregion
 
@@ -85,9 +87,13 @@ namespace App.APIs.DTOs
         public string? Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? Country { get; set; }
+        public string? Nationality { get; set; }
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
+        public string? PhoneNumber2 { get; set; }
+        public DateTime? dateOfBirth { get; set; }
+        public string? Location { get; set; }
+        public string? Gender { get; set; }
     }
     #endregion
 }

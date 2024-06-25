@@ -44,8 +44,13 @@ namespace App.APIs.Controllers
                 user.LastName,
                 user.UserName,
                 user.Email,
+                user.PhoneNumber,
+                user.PhoneNumber2,
+                user.Nationality,
+                user.dateOfBirth,
+                user.Location,
+                Gender = user.Gender.Value ? "Male" : "Female",
                 IsVerified = user.EmailConfirmed,
-                Phone = user.PhoneNumber,
                 Token = token
             });
 
