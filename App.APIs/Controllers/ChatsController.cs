@@ -31,9 +31,7 @@ namespace App.APIs.Controllers
             var chatsDto = chats.Select(chat => new
             {
                 historyId = chat.Id,
-                chat.Subject,
-                chat.LastUpdateTime,
-                lastMessage = ChatHistoryHelpers.GetLastMessage(chat.History)
+                chat.Title
             });
 
             return Ok(chatsDto);
@@ -69,15 +67,12 @@ namespace App.APIs.Controllers
             {
                 AccountId = loggedInUser.Id,
                 CourseId = course.Id,
-                History = ChatHistoryHelpers.AddMessage(new_chat.message, $"user", string.Empty),
-                Subject = "This Is a Chat!"
+                Title = new_chat.Title
             };
-
-            chat.History = ChatHistoryHelpers.SendMessage(chat.History);
 
             await unitOfWork.Repository<ChatHistory>().AddAsync(chat);
             await unitOfWork.CompleteAsync();
-            return Ok(new { status = true, historyId = chat.Id, history = chat.History.Replace("\\", "") });
+            return Ok(new { historyId = chat.Id });
         }
 
         #endregion
@@ -99,6 +94,31 @@ namespace App.APIs.Controllers
             await unitOfWork.CompleteAsync();
             return Ok(new { status = true, history = history.History.Replace("\\", "") });
         }
+        #endregion
+
+        #region Delete Chat History
+
+        [HttpDelete("{historyId}")]
+        public async Task<IActionResult> DeleteChatHistory(int historyId)
+        {
+            var username = User.FindFirstValue(ClaimTypes.GivenName);
+            Account? loggedInUser = await accountManager.FindUserByIdOrUserNameOrEmailOrPhoneAsync(username);
+            if (loggedInUser is null)
+                return NotFound(new ApiResponse(404, "user not found!"));
+
+            var history = await unitOfWork.Repository<ChatHistory>().GetByIdAsync(historyId);
+            if (history is null)
+                return NotFound(new ApiResponse(404, "history not found!"));
+
+            if (history.AccountId != loggedInUser.Id)
+                return Unauthorized(new ApiResponse(401, "Unauthorized!"));
+
+            unitOfWork.Repository<ChatHistory>().Delete(history);
+
+            await unitOfWork.CompleteAsync();
+            return Ok(new { status = true });
+        }
+
         #endregion
     }
 }

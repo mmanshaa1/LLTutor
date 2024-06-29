@@ -178,8 +178,8 @@
             if (await accountManager.IsEmailOrPhoneRegisteredAsync(model.PhoneNumber))
                 return BadRequest(new ApiValidationErrorResponse() { Errors = ["يبدو أن لديك بالفعل حسابًا باستخدام هذا البريد الإلكتروني، يرجى تسجيل الدخول!"] });
 
-            if (!Regex.IsMatch(model.Email, @"^[a-zA-Z0-9_.+-]+@(gmail|yahoo|hotmail|outlook|live|icloud)\.(com|net|org)$"))
-                return BadRequest(new ApiValidationErrorResponse() { Errors = ["يجب أن يكون البريد الإلكتروني من نوع gmail, yahoo, hotmail, outlook, live, icloud"] });
+            //if (!Regex.IsMatch(model.Email, @"^[a-zA-Z0-9_.+-]+@(gmail|yahoo|hotmail|outlook|live|icloud)\.(com|net|org)$"))
+            //    return BadRequest(new ApiValidationErrorResponse() { Errors = ["يجب أن يكون البريد الإلكتروني من نوع gmail, yahoo, hotmail, outlook, live, icloud"] });
 
             if (model.PhoneNumber.Length != 11)
                 return BadRequest(new ApiValidationErrorResponse() { Errors = ["يجب أن يكون رقم الهاتف 11 رقمًا!"] });

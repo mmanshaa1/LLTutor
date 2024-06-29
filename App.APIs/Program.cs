@@ -51,7 +51,7 @@ namespace App.APIs
                 var dbContext = services.GetRequiredService<MainContext>();
 
                 // If any Migrations created, Apply it, then Update-Database
-                await dbContext.Database.MigrateAsync();
+                // await dbContext.Database.MigrateAsync();
 
                 // Seeding Data 
                 await MainContextSeed.SeedAsync(dbContext);
